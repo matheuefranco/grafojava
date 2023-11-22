@@ -27,7 +27,7 @@ public class Grafos {
         Graph grafo = new Graph();
         Scanner scanner = new Scanner(System.in);
         int op=0;
-        grafo.carregarGrafo();
+         grafo.carregarGrafo();
         do{
         op = menuMetodos();
         switch(op){
@@ -46,7 +46,16 @@ public class Grafos {
             case 3:
                     grafo.imprimirGrafo();
             break;
-
+            case 4: System.out.println("Vertices");
+                    System.out.println("Origem:");
+                     origem=scanner.nextInt();
+                     System.out.println("Destino:");
+                     destino=scanner.nextInt();
+                     if(grafo.alcance(origem, destino)==true)
+                         System.out.println("Existe caminho");
+                     else
+                         System.out.println("Não existe caminho");
+            break;         
             case 0: System.out.println("Saindo");
                     grafo.salvarGrafo();
             break;
