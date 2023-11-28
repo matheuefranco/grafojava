@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Graph {
      private Map<Integer, LinkedList<Aresta>> meuGrafo;
-
+     private ArrayList visitados;
     public Graph() {
         this.meuGrafo = new HashMap<>();
     }
@@ -53,6 +53,20 @@ public class Graph {
         System.out.println("Caminho:"+visitados);
         return false;// depois de percorrer todo grafo
     }// fim funcao existeCaminho
+    
+    public ArrayList buscaProfundidade(int origem){
+       visitados = new ArrayList();
+       explorarDFS(origem);
+       return visitados;
+    }
+    private void explorarDFS(int verticeAtual){
+        visitados.add(verticeAtual);
+        LinkedList<Aresta> adjacentes = meuGrafo.get(verticeAtual);
+        for(Aresta adj : adjacentes)
+            if(!visitados.contains(adj.vertice))
+                explorarDFS(adj.vertice);
+    }
+    
     public void imprimirGrafo() {
         for (Map.Entry<Integer, LinkedList<Aresta>> entry : meuGrafo.entrySet()) {
             int vertice = entry.getKey();
@@ -66,7 +80,7 @@ public class Graph {
     }
     
      public void salvarGrafo() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("grafo.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("grafo2.txt"))) {
             for (Map.Entry<Integer, LinkedList<Aresta>> entry : meuGrafo.entrySet()) {
                 int vertice = entry.getKey();
                 LinkedList<Aresta> vizinhos = entry.getValue();
@@ -81,7 +95,7 @@ public class Graph {
 
     // Método para carregar os dados do grafo de um arquivo texto
     public void carregarGrafo() {
-        try (Scanner scanner = new Scanner(new File("grafo.txt"))) {
+        try (Scanner scanner = new Scanner(new File("grafo2.txt"))) {
             while (scanner.hasNext()) {
                 int origem = scanner.nextInt();
                 int destino = scanner.nextInt();

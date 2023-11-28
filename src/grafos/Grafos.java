@@ -56,6 +56,11 @@ public class Grafos {
                      else
                          System.out.println("Não existe caminho");
             break;         
+             case 5: System.out.println("DFS");
+                    System.out.println("Origem:");
+                    origem=scanner.nextInt();
+                    System.out.println(grafo.buscaProfundidade(origem));
+            break;        
             case 0: System.out.println("Saindo");
                     grafo.salvarGrafo();
             break;
