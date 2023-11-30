@@ -1,6 +1,4 @@
-
 package grafos;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -66,6 +64,22 @@ public class Graph {
             if(!visitados.contains(adj.vertice))
                 explorarDFS(adj.vertice);
     }
+    
+    public List buscaemLargura(int verticeInicial){
+        Queue<Integer> fila = new LinkedList<>();
+        visitados = new ArrayList();
+        fila.add(verticeInicial);
+        while(!fila.isEmpty()){
+            int verticeAtual = fila.poll();//dequeue
+            visitados.add(verticeAtual);
+            List<Aresta> vizinhos = meuGrafo.get(verticeAtual);
+            for(Aresta adjacente : vizinhos)
+                if(!visitados.contains(adjacente.vertice)
+                        && !fila.contains(adjacente.vertice))
+                    fila.add(adjacente.vertice);
+        }
+        return visitados;
+    }// fim bfs
     
     public void imprimirGrafo() {
         for (Map.Entry<Integer, LinkedList<Aresta>> entry : meuGrafo.entrySet()) {
