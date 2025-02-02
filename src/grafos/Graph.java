@@ -1,9 +1,8 @@
+//2024-2025
 package grafos;
 
 import java.io.*;
 import java.util.*;
-
-
 
 public class Graph {
      private HashMap<Integer, LinkedList<Aresta>> meuGrafo;
@@ -11,10 +10,6 @@ public class Graph {
     public Graph() {
         this.meuGrafo = new HashMap<>();
     } 
-
-
-
-
 
     // Método para imprimir o grafo
     public void imprimirGrafo(boolean caractere) {
