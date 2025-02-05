@@ -1,4 +1,3 @@
-
 package grafos;
 
 import java.util.*;
@@ -33,14 +32,14 @@ public class MainGrafos {
         switch(op){
             case 1: System.out.println("Vertice:");
                     int valor=scanner.nextInt();
-                    //grafo.adicionarVertice(valor);
+                    grafo.adicionarVertice(valor);
             break;
             case 2: System.out.println("Adjacencias:");
                     int origem=scanner.nextInt();
                     int destino=scanner.nextInt();
                     System.out.println("Peso:");
                     int peso = scanner.nextInt();
-                    //grafo.adicionarAresta(origem, destino, peso);
+                    grafo.adicionarAresta(origem, destino, peso);
                     
             break;
             case 3:
@@ -49,20 +48,20 @@ public class MainGrafos {
             case 4: System.out.println("Origem e destino:");
                     origem=scanner.nextInt();
                     destino=scanner.nextInt();
-                    /*if (grafo.alcance(origem, destino)) 
+                    if (grafo.alcance(origem, destino)==true) 
                     System.out.println("Existe um caminho entre " + origem + " e " + destino);
                      else 
-                        System.out.println("Não existe um caminho entre " + origem + " e " + destino);*/
+                        System.out.println("Não existe um caminho entre " + origem + " e " + destino);
             break;
             case 5: System.out.println("Vertice de Origem:");
                     origem=scanner.nextInt();
-                    //List<Integer> verticesVisitados = grafo.buscaEmProfundidade(origem);
-                    //System.out.println("Vertices visitados em uma busca em profundidade a partir de " + origem + ": " + verticesVisitados);
+                    List<Integer> verticesVisitados = grafo.buscaEmProfundidade(origem);
+                    System.out.println("Vertices visitados em uma busca em profundidade a partir de " + origem + ": " + verticesVisitados);
             break;
             case 6: System.out.println("Vertice de Origem:");
                     origem=scanner.nextInt();
-                    //verticesVisitados = grafo.exploracaoEmLargura(origem);
-                    //System.out.println("Vertices visitados em uma busca em largura a partir de " + origem + ": " + verticesVisitados);
+                    verticesVisitados = grafo.exploracaoEmLargura(origem);
+                    System.out.println("Vertices visitados em uma busca em largura a partir de " + origem + ": " + verticesVisitados);
             break;
              case 7: //
             break;

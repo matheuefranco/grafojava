@@ -1,6 +1,5 @@
 //2024-2025 
 package grafos;
-
 import java.io.*;
 import java.util.*;
 
@@ -10,6 +9,72 @@ public class Graph {
     public Graph() {
         this.meuGrafo = new HashMap<>();
     } 
+    public void adicionarVertice(int vertice){
+        if(!meuGrafo.containsKey(vertice))
+            meuGrafo.put(vertice, new LinkedList<>());
+    }
+    public void adicionarAresta(int ori, int dest, int peso){
+        if(meuGrafo.containsKey(ori) 
+                && meuGrafo.containsKey(dest))
+            meuGrafo.get(ori).add(new Aresta(dest, peso));
+    }
+    
+    public boolean alcance(int origem, int destino) {
+        visitados = new ArrayList<>();
+        return existeCaminho(origem, destino, visitados);
+    }
+
+    private boolean existeCaminho(int verticeAtual, int destino, ArrayList visitados) {
+    	if (verticeAtual == destino) // caso base
+        	return true;
+    	visitados.add(verticeAtual);
+        System.out.println("Visitados:"+visitados);
+        System.out.println("Vertice atual:"+verticeAtual + " Adjacencias:");
+    	LinkedList<Aresta> vizinhos = meuGrafo.get(verticeAtual);
+        for (Aresta vizinho : vizinhos)
+            System.out.print("["+vizinho.vertice+"]");
+        System.out.println("");
+    	if (vizinhos != null)
+        	for (Aresta vizinho : vizinhos)
+            	if (!visitados.contains(vizinho.vertice) && existeCaminho(vizinho.vertice, destino, visitados))
+                    return true;
+    	return false;
+	}
+    
+    public List<Integer> buscaEmProfundidade(int verticeInicial) {
+        visitados = new ArrayList();
+        explorarDFS(verticeInicial);
+        return visitados;
+    }
+    
+    private void explorarDFS(int verticeAtual) {
+        visitados.add(verticeAtual);
+        LinkedList<Aresta> vizinhos = meuGrafo.get(verticeAtual);
+        if (vizinhos != null) 
+            for (Aresta vizinho : vizinhos) 
+                if (!visitados.contains(vizinho.vertice)) 
+                    explorarDFS(vizinho.vertice);
+    }
+    
+    
+    public List<Integer> exploracaoEmLargura(int verticeInicial) {
+        Queue<Integer> fila = new LinkedList<>();
+        visitados = new ArrayList();
+        fila.add(verticeInicial);
+        while (!fila.isEmpty()) {
+            int verticeAtual = fila.poll();
+            visitados.add(verticeAtual);
+            List<Aresta> vizinhos = meuGrafo.get(verticeAtual);
+            if (vizinhos != null) 
+                for (Aresta vizinho : vizinhos) 
+                    if (!visitados.contains(vizinho.vertice) 
+                            && !fila.contains(vizinho.vertice))
+                        fila.add(vizinho.vertice);
+        }// fim while
+
+        return visitados;
+    }// fim funcao BFS
+
 
     // Método para imprimir o grafo
     public void imprimirGrafo(boolean caractere) {
@@ -60,9 +125,9 @@ public class Graph {
                 int destino = scanner.nextInt();
                 int peso = scanner.nextInt();
 
-                //adicionarVertice(origem);
-                //adicionarVertice(destino);
-                //adicionarAresta(origem, destino, peso);
+                 adicionarVertice(origem);
+                 adicionarVertice(destino);
+                 adicionarAresta(origem, destino, peso);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
