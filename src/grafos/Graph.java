@@ -15,8 +15,11 @@ public class Graph {
     }
     public void adicionarAresta(int ori, int dest, int peso){
         if(meuGrafo.containsKey(ori) 
-                && meuGrafo.containsKey(dest))
+                && meuGrafo.containsKey(dest)){
             meuGrafo.get(ori).add(new Aresta(dest, peso));
+            meuGrafo.get(dest).add(new Aresta(ori, peso));
+        
+        }
     }
     
     public boolean alcance(int origem, int destino) {
@@ -74,6 +77,62 @@ public class Graph {
 
         return visitados;
     }// fim funcao BFS
+    
+     public List<Integer> dijkstra(int origem, int destino) {
+    Map<Integer, Integer> distancias = new HashMap<>();
+    Map<Integer, Integer> predecessores = new HashMap<>();
+    PriorityQueue<int[]> filaPrioridade = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+    
+    for (int vertice : meuGrafo.keySet()) {
+        distancias.put(vertice, Integer.MAX_VALUE);
+        predecessores.put(vertice, -1);
+    }
+    
+    distancias.put(origem, 0);
+    filaPrioridade.add(new int[]{origem, 0});
+    
+    while (!filaPrioridade.isEmpty()) {
+        int[] atual = filaPrioridade.poll();
+        int verticeAtual = atual[0];
+        int distanciaAtual = atual[1];
+        
+        if (verticeAtual == destino) break;
+        
+        if (distanciaAtual > distancias.get(verticeAtual)) continue;
+        
+            for (Aresta vizinho : meuGrafo.get(verticeAtual)) {
+                if (vizinho != null) {  // Verifica se o vizinho não é nulo
+                    int novaDistancia = distanciaAtual + vizinho.peso;
+                    if (novaDistancia < distancias.get(vizinho.vertice)) {
+                        distancias.put(vizinho.vertice, novaDistancia);
+                        predecessores.put(vizinho.vertice, verticeAtual);
+                        filaPrioridade.add(new int[]{vizinho.vertice, novaDistancia});
+                    }
+                }
+            }
+    }// fim while
+    
+    List<Integer> caminho = new ArrayList<>();
+    for (Integer v = destino; v != -1; v = predecessores.get(v)) {
+        System.out.println("Add "+v);
+        caminho.add(v);
+    }
+        // Impressão da distância final
+    System.out.println("Distancia ate " + destino + ": " + distancias.get(destino));
+
+    // Impressão dos vetores de distâncias e predecessores
+    System.out.println("Vetores de distâncias:");
+    for (Map.Entry<Integer, Integer> entry : distancias.entrySet()) {
+        System.out.println("Vertice: " + entry.getKey() + " - Distancia: " + entry.getValue());
+    }
+
+    System.out.println("Vetores de predecessores:");
+    for (Map.Entry<Integer, Integer> entry : predecessores.entrySet()) {
+        System.out.println("Vertice: " + entry.getKey() + " - Predecessor: " + entry.getValue());
+    }
+    Collections.reverse(caminho);
+    return caminho;
+}
 
 
     // Método para imprimir o grafo

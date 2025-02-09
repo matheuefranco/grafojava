@@ -25,7 +25,7 @@ public class MainGrafos {
         Graph grafo = new Graph();
         Scanner scanner = new Scanner(System.in);
         int op=0;
-        String nomeArquivo = "grafo.txt"; 
+        String nomeArquivo = "grafo_dijkstra_exemplo1.txt"; 
         grafo.carregarGrafo(nomeArquivo);
         do{
         op = menu();
@@ -63,10 +63,16 @@ public class MainGrafos {
                     verticesVisitados = grafo.exploracaoEmLargura(origem);
                     System.out.println("Vertices visitados em uma busca em largura a partir de " + origem + ": " + verticesVisitados);
             break;
-             case 7: //
+             case 7: System.out.println("Dijkstra - Entre com a origem e o destino:");
+                    origem=scanner.nextInt();
+                    destino=scanner.nextInt();
+                    List<Integer> caminho = grafo.dijkstra(origem, destino);
+                    System.out.println("Dijkstra: " + caminho);
+
+
             break;
             case 0: System.out.println("Saindo");
-                    grafo.salvarGrafo(nomeArquivo);
+                    //grafo.salvarGrafo(nomeArquivo);
             break;
         }// fim switch
         }while(op!=0);
